@@ -1,15 +1,14 @@
 package repository
 
-import(
-	
+import (
+	"fmt"
 	"time"
-	"github.com/iris-app/model"
-	
-	
-	) 
 
-var productlist = []*Product{
-	&Product{
+	"github.com/iris-app/model"
+)
+
+var productList = []*model.Product{
+	&model.Product{
 
 		ID:          1,
 		Name:        "Latte",
@@ -20,7 +19,7 @@ var productlist = []*Product{
 		UpdatedOn:   time.Now().UTC().String(),
 	},
 
-	&Product{
+	&model.Product{
 
 		ID:          2,
 		Name:        "Espresso",
@@ -32,8 +31,45 @@ var productlist = []*Product{
 	},
 }
 
+type Products []*model.Product
 
+func GetProducts() Products {
 
-type Products []*Product
+	return productList
 
+}
 
+func AddProduct(p *model.Product) {
+	p.ID = getNextID()
+	productList = append(productList, p)
+}
+
+func UpdateProduct(id int, p *model.Product) error {
+	_, pos, err := findProduct(id)
+	if err != nil {
+		return err
+	}
+
+	p.ID = id
+	productList[pos] = p
+
+	return nil
+}
+
+//ErrProductNotFound defaut type use for erro type
+var ErrProductNotFound = fmt.Errorf("Product not found")
+
+func findProduct(id int) (*model.Product, int, error) {
+	for i, p := range productList {
+		if p.ID == id {
+			return p, i, nil
+		}
+	}
+
+	return nil, -1, ErrProductNotFound
+}
+
+func getNextID() int {
+	lp := productList[len(productList)-1]
+	return lp.ID + 1
+}

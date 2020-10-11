@@ -1,8 +1,5 @@
 package model
 
-
-
-
 type Product struct {
 	ID          int     `json:"id"`
 	Name        string  `json:"name"`
@@ -13,5 +10,3 @@ type Product struct {
 	UpdatedOn   string  `json:"-"`
 	DeletedOn   string  `json:"-"`
 }
-
-
