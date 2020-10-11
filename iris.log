@@ -1,0 +1,5 @@
+[DBUG] 2020/10/09 19:15 API: 1 registered route (1 GET)
+GET: /ping (./main.go:91)
+
+Now listening on: http://localhost:8080
+Application started. Press CTRL+C to shut down.
